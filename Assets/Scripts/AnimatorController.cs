@@ -6,19 +6,30 @@ public class AnimatorController : MonoBehaviour
 {
     private Animator animator;
     private CharacterMovement characterMovement;
+    private Rigidbody rb;
+
     public void Start()
     {
         animator = GetComponent<Animator>();
         characterMovement = GetComponent<CharacterMovement>();
-    }
-    public void LateUpdate()
-    {
-       UpdateAnimator();
+        rb = GetComponent<Rigidbody>();
     }
 
-    // TODO Fill this in with your animator calls
-    void UpdateAnimator()
+    void Update()
     {
-        
+        animator.SetFloat("CharacterSpeed", rb.velocity.magnitude);
+        animator.SetBool("IsGrounded", characterMovement.IsGrounded);
+        animator.SetBool("isDoubleJumping", !characterMovement.IsGrounded && Input.GetButtonDown("Jump") && characterMovement.canDoubleJump);
     }
+
+    // public void LateUpdate()
+    // {
+    //    UpdateAnimator();
+    // }
+
+    // // TODO Fill this in with your animator calls
+    // void UpdateAnimator()
+    // {
+        
+    // }
 }
