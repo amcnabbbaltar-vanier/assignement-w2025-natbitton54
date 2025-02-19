@@ -17,19 +17,23 @@ public class AnimatorController : MonoBehaviour
 
     void Update()
     {
-        animator.SetFloat("CharacterSpeed", rb.velocity.magnitude);
-        animator.SetBool("IsGrounded", characterMovement.IsGrounded);
-        animator.SetBool("isDoubleJumping", !characterMovement.IsGrounded && Input.GetButtonDown("Jump") && characterMovement.canDoubleJump);
+       
     }
 
-    // public void LateUpdate()
-    // {
-    //    UpdateAnimator();
-    // }
+    public void LateUpdate()
+    {
+       UpdateAnimator();
+    }
 
-    // // TODO Fill this in with your animator calls
-    // void UpdateAnimator()
-    // {
-        
-    // }
+    // TODO Fill this in with your animator calls
+    void UpdateAnimator()
+    {
+        animator.SetFloat("CharacterSpeed", rb.velocity.magnitude);
+        animator.SetBool("IsGrounded", characterMovement.IsGrounded);
+        if(characterMovement.canDoubleJump){
+            if(Input.GetButtonDown("Jump")){
+                animator.SetBool("isDoubleJumping", true);
+            }
+        }
+    }
 }
