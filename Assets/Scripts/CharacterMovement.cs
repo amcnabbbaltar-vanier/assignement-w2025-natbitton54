@@ -13,11 +13,14 @@ public class CharacterMovement : MonoBehaviour
     // ============================== Jump Settings =================================
     [Header("Jump Settings")]
     [SerializeField] private float jumpForce = 5f;        // Jump force applied to the character
-    [SerializeField] private float doubleJumpForce = 2f;  // Force applied for double jump, can be different from regular jump
     [SerializeField] private float groundCheckDistance = 1.1f; // Distance to check for ground contact (Raycast)
+
+    private float jumpStatus = 0f;
 
     // ============================== Modifiable from other scripts ==================
     public float speedMultiplier = 1.0f; // Additional multiplier for character speed ( WINK WINK )
+
+    public int score = 0;
 
     // ============================== Private Variables ==============================
     private Rigidbody rb; // Reference to the Rigidbody component
@@ -29,9 +32,6 @@ public class CharacterMovement : MonoBehaviour
     private bool jumpRequest; // Flag to check if the player requested a jump
     private Vector3 moveDirection; // Stores the calculated movement direction
 
-    // Double jump variables
-    public bool canDoubleJump = false; // Flag to check if a double jump is possible
-
     // ============================== Animation Variables ==============================
     [Header("Anim values")]
     public float groundSpeed; // Speed value used for animations
@@ -41,7 +41,7 @@ public class CharacterMovement : MonoBehaviour
     /// Checks if the character is currently grounded using a Raycast.
     /// If false, the character is in the air.
     /// </summary>
-    public bool IsGrounded =>
+    public bool IsGrounded => 
         Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, groundCheckDistance);
 
     /// <summary>
@@ -49,28 +49,24 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     private bool IsRunning => Input.GetButton("Run");
 
+    public bool canDoubleJump = false;
+
     // ============================== Unity Built-in Methods ==============================
 
     /// <summary>
     /// Called when the script is first initialized.
     /// </summary>
-    private Animator animator;
-
     private void Awake()
     {
-        InitializeComponents();
-        animator = GetComponent<Animator>(); // Add this line to get the Animator component
+        InitializeComponents(); // Initialize Rigidbody and Camera reference
     }
+
     /// <summary>
     /// Called every frame, used to register player input.
     /// </summary>
     private void Update()
     {
-        RegisterInput();
-        if (IsGrounded)
-        {
-            animator.SetBool("isDoubleJumping", false);
-        }
+        RegisterInput(); // Collect player input
     }
 
     /// <summary>
@@ -166,29 +162,21 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     private void HandleJump()
     {
-        // Apply jump force only if jump was requested
-        if (jumpRequest)
-        {
-            if (IsGrounded)
-            {
-                // First jump
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                canDoubleJump = true; // Enable double jump after first jump
-                animator.SetBool("isDoubleJumping", false); // Reset double jump animation flag
-                Debug.Log("First Jump, Resetting isDoubleJumping to false");
+        // Apply jump force only if jump was requested and the character is grounded
+        if(jumpRequest){
+            if(IsGrounded){
+                rb.AddForce(Vector3.up*jumpForce,ForceMode.Impulse);
+                jumpRequest = false;
+                jumpStatus = 0f;
             }
-            else if (canDoubleJump)
-            {
-                // Double jump
-                rb.AddForce(Vector3.up * doubleJumpForce, ForceMode.Impulse);
-                canDoubleJump = false; // Disable double jump after using it
-                animator.SetBool("isDoubleJumping", true); // Set the double jumping animation flag to true
-                Debug.Log("Double Jump, Setting isDoubleJumping to true");
+            else if (canDoubleJump && jumpStatus == 0f){
+                rb.AddForce(Vector3.up*jumpForce,ForceMode.Impulse);
+                jumpRequest = false;
+                jumpStatus = 1f;
             }
-            // Reset jump request here to ensure it's only processed once per button press
-            jumpRequest = false;
         }
     }
+
     /// <summary>
     /// Rotates the character towards the movement direction.
     /// </summary>
@@ -210,13 +198,13 @@ public class CharacterMovement : MonoBehaviour
     {
         // Determine movement speed (walking or running)
         float speed = IsRunning ? baseRunSpeed : baseWalkSpeed;
-
+        
         // Set ground speed value for animation purposes
         groundSpeed = (moveDirection != Vector3.zero) ? speed : 0.0f;
 
         // Preserve the current Y velocity to maintain gravity effects
         Vector3 newVelocity = new Vector3(
-            moveDirection.x * speed * speedMultiplier,
+            moveDirection.x * speed * speedMultiplier, 
             rb.velocity.y, // Keep the existing Y velocity for jumping & gravity
             moveDirection.z * speed * speedMultiplier
         );

@@ -14,12 +14,6 @@ public class AnimatorController : MonoBehaviour
         characterMovement = GetComponent<CharacterMovement>();
         rb = GetComponent<Rigidbody>();
     }
-
-    void Update()
-    {
-       
-    }
-
     public void LateUpdate()
     {
        UpdateAnimator();
