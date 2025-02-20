@@ -4,7 +4,7 @@ using UnityEngine;
 public class DoubleJumpPickup : MonoBehaviour
 {
     private float rotateSpeed = 50f;
-    public float height = 2.5f;
+    public float height = 2f;
     private Vector3 startPos;
     public float powerUpDuration = 30f;
     public GameObject pickupEffect; // Reference to the pickup effect

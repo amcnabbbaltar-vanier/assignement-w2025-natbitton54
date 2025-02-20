@@ -15,7 +15,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;        // Jump force applied to the character
     [SerializeField] private float groundCheckDistance = 1.1f; // Distance to check for ground contact (Raycast)
 
-    private float jumpStatus = 0f;
+    public float jumpStatus = 0f;
 
     // ============================== Modifiable from other scripts ==================
     public float speedMultiplier = 1.0f; // Additional multiplier for character speed ( WINK WINK )
