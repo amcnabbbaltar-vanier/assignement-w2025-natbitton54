@@ -2192,7 +2192,7 @@ MonoBehaviour:
   baseRunSpeed: 8
   rotationSpeed: 10
   jumpForce: 5
-  groundCheckDistance: 1.1
+  groundCheckDistance: 0.5
   jumpStatus: 0
   speedMultiplier: 1
   score: 0
