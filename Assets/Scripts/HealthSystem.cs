@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class HealthSystem : MonoBehaviour
 {
-    public int maxHealth = 3; // Maximum health (3 health points)
-    private int currentHealth; // Current health
-    public HealthUIManager healthUIManager;  // Reference to UI manager
+    public int maxHealth = 3; // Maximum health (3 lives)
+    private int currentHealth; // Current lives
+    public HealthUIManager healthUIManager; // Reference to UI manager
 
     void Start()
     {
@@ -15,8 +15,13 @@ public class HealthSystem : MonoBehaviour
             return;
         }
 
-        // Initialize health to max
-        currentHealth = maxHealth;
+        // Load saved lives from GameManager
+        GameManager.Instance.LoadGame();
+        currentHealth = GameManager.Instance.currentLives; // Sync with GameManager
+
+        // Ensure currentHealth doesn’t exceed maxHealth
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
         healthUIManager.UpdateHealthUI(); // Update the UI on start
     }
 
@@ -24,37 +29,51 @@ public class HealthSystem : MonoBehaviour
     {
         if (other.CompareTag("RedTrap"))
         {
-            TakeDamage(1); // Take 1 damage on RedTrap collision
+            TakeDamage(1); // Take 1 damage (lose 1 life) on RedTrap collision
         }
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage; // Decrease current health by damage
+        currentHealth -= damage; // Decrease current lives by damage
 
         if (currentHealth <= 0)
         {
-            // If health reaches 0, the level restarts
+            // If lives reach 0, the level restarts
             Die();
         }
 
-        healthUIManager.UpdateHealthUI(); // Update the UI with the new health
+        // Sync lives with GameManager and save
+        GameManager.Instance.currentLives = currentHealth;
+        GameManager.Instance.SaveGame();
+
+        healthUIManager.UpdateHealthUI(); // Update the UI with the new lives
     }
 
     void Die()
     {
-        // Reset the score, lives, and timer when the player dies
-        GameManager.Instance.currentScore = 0;
-        GameManager.Instance.currentLives = 3;
-        GameManager.Instance.SaveGame();
+        // If we're in level 1, reset the timer
+        if (SceneManager.GetActiveScene().buildIndex == 0)  // Level 1
+        {
+            // Reset the score, lives, and timer when the player dies in level 1
+            GameManager.Instance.currentScore = 0;
+            GameManager.Instance.currentLives = 3; // Reset lives to 3
+            GameManager.Instance.SaveGame(); // Save reset lives
 
-        // Reset the timer
-        FindObjectOfType<timer>().ResetTimer();
+            // Reset the timer
+            FindObjectOfType<timer>().ResetTimer();
+        }
+        else
+        {
+            // If not in level 1, just reset lives and score but do not reset the timer
+            GameManager.Instance.currentLives = 3; // Reset lives to 3
+            GameManager.Instance.currentScore = 0; // Reset score
+            GameManager.Instance.SaveGame(); // Save reset data
+        }
 
         // Reload the scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
 
     public void UpdateHealthUI()
     {
@@ -66,6 +85,6 @@ public class HealthSystem : MonoBehaviour
 
     public int GetCurrentHP()
     {
-        return currentHealth;  // Return the current health
+        return currentHealth; // Return the current lives
     }
 }

@@ -9,31 +9,40 @@ public class timer : MonoBehaviour
     public TextMeshProUGUI TimerText;
     private float time;
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    // This method will run when the Unity Play button is clicked, resetting the timer
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void OnGameStart()
     {
+        // Reset timer only when Unity starts running (via Play button)
         PlayerPrefs.SetFloat("timer", 0f);
+        PlayerPrefs.Save(); // Ensure the reset is saved
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        time = PlayerPrefs.GetFloat("timer", 0f);
+        // Load the saved timer value (if any) from PlayerPrefs
+        time = PlayerPrefs.GetFloat("timer", 0f); // Default to 0f if no timer value is saved
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Accumulate time continuously
         time += Time.deltaTime;
-        PlayerPrefs.SetFloat("timer", time);
 
+        // Save the timer value in PlayerPrefs
+        PlayerPrefs.SetFloat("timer", time);
+        PlayerPrefs.Save(); // Save the updated timer value to PlayerPrefs
+
+        // Display time in minutes, seconds, and milliseconds
         int min = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
         int ms = Mathf.FloorToInt((time * 100) % 100);
 
         if (TimerText != null)
         {
-            TimerText.text = string.Format("{0:00}:{1:00}.{2:00}", min, seconds, ms);
+            TimerText.text = string.Format("{0:00}:{1:00}.{2:00}", min, seconds, ms); // Format and show timer
         }
         else
         {
@@ -41,10 +50,13 @@ public class timer : MonoBehaviour
         }
     }
 
+    // This method resets the timer manually (can be called during level resets or on certain events)
     public void ResetTimer()
     {
-        time = 0f;
+        time = 0f; // Reset the time
         PlayerPrefs.SetFloat("timer", time); // Save the reset time
+        PlayerPrefs.Save(); // Ensure the reset is saved
+
         if (TimerText != null)
         {
             TimerText.text = "00:00.00"; // Optionally reset UI immediately

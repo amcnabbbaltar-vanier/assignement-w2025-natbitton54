@@ -33,7 +33,7 @@ public class HealthUIManager : MonoBehaviour
         if (healthSystem != null && healthText != null)
         {
             // Display current health out of 3 (e.g., "Health: 3/3")
-            healthText.text = "Health: " + healthSystem.GetCurrentHP() + "/" + healthSystem.maxHealth;
+            healthText.text = "Lives: " + healthSystem.GetCurrentHP() + "/" + healthSystem.maxHealth;
         }
     }
 }
