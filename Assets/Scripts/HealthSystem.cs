@@ -53,7 +53,7 @@ public class HealthSystem : MonoBehaviour
     void Die()
     {
         // If we're in level 1, reset the timer
-        if (SceneManager.GetActiveScene().buildIndex == 0)  // Level 1
+        if (SceneManager.GetActiveScene().buildIndex == 1)  // Level 1
         {
             // Reset the score, lives, and timer when the player dies in level 1
             GameManager.Instance.currentScore = 0;
