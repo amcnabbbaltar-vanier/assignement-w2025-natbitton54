@@ -7,7 +7,7 @@ public class DoubleJumpPickup : MonoBehaviour
     public float height = 2f;
     private Vector3 startPos;
     public float powerUpDuration = 30f;
-    public GameObject pickupEffect; // Reference to the pickup effect
+    public GameObject pickupEffect; 
 
     void Start()
     {

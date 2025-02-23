@@ -26,7 +26,7 @@ public class AnimatorController : MonoBehaviour
         animator.SetBool("IsGrounded", characterMovement.IsGrounded);
         if(characterMovement.canDoubleJump){
             if(Input.GetButtonDown("Jump")){
-                animator.SetBool("isDoubleJumping", true);
+                animator.SetTrigger("isDoubleJumping");
             }
         }
     }
