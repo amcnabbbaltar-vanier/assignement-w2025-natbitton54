@@ -5,15 +5,6 @@ public class ScorePickup : MonoBehaviour
     public int scoreAmount = 50; // Points to add when picked up
     public GameObject pickupEffect; // Particle effect prefab
 
-    void Start()
-    {
-        // Ensure the pickup effect is inactive when the game starts
-        if (pickupEffect != null)
-        {
-            pickupEffect.SetActive(false);
-        }
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
