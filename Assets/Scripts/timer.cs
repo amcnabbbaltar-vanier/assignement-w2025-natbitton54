@@ -11,7 +11,7 @@ public class timer : MonoBehaviour
 
     // This method will run when the Unity Play button is clicked, resetting the timer
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void OnGameStart()
+   public static void OnGameStart()
     {
         // Reset timer only when Unity starts running (via Play button)
         PlayerPrefs.SetFloat("timer", 0f);

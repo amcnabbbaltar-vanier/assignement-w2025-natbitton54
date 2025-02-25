@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    static void OnGameStart()
+    public static void OnGameStart()
     {
         // Reset score and lives ONLY when game starts from Unity Play button
         PlayerPrefs.SetInt("PlayerScore", 0);

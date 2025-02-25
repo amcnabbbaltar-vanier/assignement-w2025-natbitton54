@@ -6056,17 +6056,6 @@ RectTransform:
   m_AnchoredPosition: {x: -421, y: -236}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &523552345 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11000172819163143, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-  m_PrefabInstance: {fileID: 552193226}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa2396f50e4971c4ca05a320f91fedd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &529208120
 GameObject:
   m_ObjectHideFlags: 0
@@ -6260,41 +6249,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4161318390268610384, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 523552345}
-    - target: {fileID: 4161318390268610384, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartLevel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6256977472812380971, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 523552345}
-    - target: {fileID: 6256977472812380971, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumeGame
-      objectReference: {fileID: 0}
     - target: {fileID: 6352758476093566142, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
       propertyPath: m_Name
       value: PauseMenuCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 7109390660856692017, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 523552345}
-    - target: {fileID: 7109390660856692017, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitToMainMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8694846756903177574, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -146
-      objectReference: {fileID: 0}
-    - target: {fileID: 9174013756833604359, guid: 163fa874a58de9c4f8cef5096da92d8c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -224
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

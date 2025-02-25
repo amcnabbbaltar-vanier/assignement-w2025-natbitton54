@@ -7,14 +7,13 @@ public class MainMenuScript : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(1);
+        GameManager.OnGameStart();
+        timer.OnGameStart();
     }
 
     public void QuitGame()
     {
         Application.Quit();
 
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #endif
     }
 }
