@@ -32,39 +32,10 @@ public class DoubleJumpPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            StartCoroutine(Pickup(other));
+            StartCoroutine(other.gameObject.GetComponent<PlayerPickupManager>().DoubleJumpPickup(other,pickupEffect,powerUpDuration));
+            // gameObject.SetActive(false);
         }
     }
 
-    IEnumerator Pickup(Collider player)
-    {
-        Debug.Log("Double Jump power-up picked up.");
-
-        // Enable double jump
-        CharacterMovement movement = player.GetComponent<CharacterMovement>();
-        if (movement != null)
-        {
-            movement.canDoubleJump = true;
-        }
-
-        // Trigger effect (instantiate the effect only when the power-up is picked up)
-        if (pickupEffect != null)
-        {
-            pickupEffect.SetActive(true); // Activate the particle effect on pickup
-            Instantiate(pickupEffect, transform.position, Quaternion.identity);
-        }
-
-        // Disable pickup object
-        gameObject.SetActive(false);
-
-        // Wait for power-up duration
-        yield return new WaitForSeconds(powerUpDuration);
-
-        // Disable double jump after time
-        if (movement != null)
-        {
-            Debug.Log("Double Jump power-up expired.");
-            movement.canDoubleJump = false;
-        }
-    }
+    
 }

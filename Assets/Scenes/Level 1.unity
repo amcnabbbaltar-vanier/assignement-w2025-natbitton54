@@ -6840,6 +6840,10 @@ PrefabInstance:
       propertyPath: pickupEffect
       value: 
       objectReference: {fileID: 1723338256}
+    - target: {fileID: 4087955905102033080, guid: 0ac73b75252b46b43bd3125582c827d3, type: 3}
+      propertyPath: powerUpDuration
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6193856929177737845, guid: 0ac73b75252b46b43bd3125582c827d3, type: 3}
       propertyPath: hoverSpeed
       value: 2
