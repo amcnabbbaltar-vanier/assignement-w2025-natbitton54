@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerPickupManager : MonoBehaviour
 {
-   public IEnumerator DoubleJumpPickup(Collider player,GameObject pickupEffect, float powerUpDuration )
+    public IEnumerator DoubleJumpPickup(Collider player,GameObject pickupEffect, float powerUpDuration )
     {
         Debug.Log("Double Jump power-up picked up.");
 
         // Enable double jump
         CharacterMovement movement = player.GetComponent<CharacterMovement>();
+        AudioSource audioSource = player.GetComponent<AudioSource>();
+
         if (movement != null)
         {
             movement.canDoubleJump = true;
@@ -35,5 +37,28 @@ public class PlayerPickupManager : MonoBehaviour
             Debug.Log("Double Jump power-up expired.");
             movement.canDoubleJump = false;
         }
+    }
+
+    public IEnumerator SpeedPickup(Collider player, GameObject pickupEffect, float powerUpDuration, float speedMultiplier)
+    {
+        Debug.Log("Speed Boost power-up picked up.");
+
+        CharacterMovement movement = player.GetComponent<CharacterMovement>();
+        if (movement != null)
+        {
+            movement.speedMultiplier *= speedMultiplier;
+        }
+
+        if (pickupEffect != null)
+            Instantiate(pickupEffect, transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(powerUpDuration);
+
+        if (movement != null)
+        {
+            movement.speedMultiplier /= speedMultiplier;
+        }
+
+        Debug.Log("Speed Boost power-up expired.");
     }
 }

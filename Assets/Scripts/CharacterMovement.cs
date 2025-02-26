@@ -49,7 +49,10 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     private bool IsRunning => Input.GetButton("Run");
 
-    public bool canDoubleJump = false;
+    public bool canDoubleJump = false; // Gets enabled by power-up
+    public AudioClip doubleJumpSound; 
+    private AudioSource audioSource;
+
 
     // ============================== Unity Built-in Methods ==============================
 
@@ -59,6 +62,7 @@ public class CharacterMovement : MonoBehaviour
     private void Awake()
     {
         InitializeComponents(); // Initialize Rigidbody and Camera reference
+        audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -173,6 +177,11 @@ public class CharacterMovement : MonoBehaviour
                 rb.AddForce(Vector3.up*jumpForce,ForceMode.Impulse);
                 jumpRequest = false;
                 jumpStatus = 1f;
+
+                if (audioSource != null && doubleJumpSound != null)
+                {
+                    audioSource.PlayOneShot(doubleJumpSound);  // Play the double jump sound effect
+                }
             }
         }
     }

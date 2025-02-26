@@ -6,35 +6,26 @@ public class SpeedBuffPickup : MonoBehaviour
 {
     public float powerUpDuration = 15f;
     public float speedMultiplier = 2.2f;
-    public GameObject pickUpEffect;
-    // Start is called before the first frame update
+    public GameObject pickupEffect;
+    private Renderer pickupRenderer;
+    private Collider pickupCollider;
 
+    void Start()
+    {
+        pickupRenderer = GetComponent<Renderer>();
+        pickupCollider = GetComponent<Collider>();
+
+    }
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player")){
-            StartCoroutine(Pickup(other));
-        }
-    }
+          PlayerPickupManager pickupManager = other.gameObject.GetComponent<PlayerPickupManager>();
+            if (pickupManager != null)
+            {
+                // Start the power-up effect but do NOT tie the pickup object's state to it
+                StartCoroutine(pickupManager.SpeedPickup(other, pickupEffect, powerUpDuration, speedMultiplier));
 
-    IEnumerator Pickup(Collider player){
-        Debug.Log("Speed Boost power-up picked up.");
-
-        CharacterMovement movement = player.GetComponent<CharacterMovement>();
-        if(movement != null){
-            movement.speedMultiplier *= speedMultiplier;
-        }
-
-        if(pickUpEffect != null)
-            Instantiate(pickUpEffect, transform.position, Quaternion.identity);
-        
-        gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(powerUpDuration);
-
-        if(movement != null){
-            movement.speedMultiplier /= speedMultiplier;
-        }
-
-        Debug.Log("Speed Boost power-up expired.");
+                if(pickupRenderer != null) pickupRenderer.enabled = false;
+                if(pickupCollider != null) pickupCollider.enabled = false;
+            }
     }
 }
