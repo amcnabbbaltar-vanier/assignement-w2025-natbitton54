@@ -121,9 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056b6846870c2cd4ea64768a17cca23c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpDuration: 15
+  powerUpDuration: 5
   speedMultiplier: 2.2
-  pickUpEffect: {fileID: 0}
+  pickupEffect: {fileID: 0}
 --- !u!114 &7413373077433245391
 MonoBehaviour:
   m_ObjectHideFlags: 0
