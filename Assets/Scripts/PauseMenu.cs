@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +38,25 @@ public class PauseMenu : MonoBehaviour
 
     public void RestartLevel()
     {
+        // Check if the current scene is Scene 1 (BuildIndex 1)
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            // Find and reset the timer
+            timer gameTimer = FindObjectOfType<timer>(); 
+            if (gameTimer != null)
+            {
+                gameTimer.ResetTimer(); 
+            }
+            else
+            {
+                Debug.LogWarning("Timer script not found in the scene.");
+            }
+
+            GameManager.Instance.currentScore = 0; // Reset score
+            GameManager.Instance.currentLives = 3; // Reset lives to 3
+            GameManager.Instance.SaveGame();
+        }
+
         Time.timeScale = 1f; // Ensure time resumes
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reloads the level
         Debug.Log("Level Restarted");
