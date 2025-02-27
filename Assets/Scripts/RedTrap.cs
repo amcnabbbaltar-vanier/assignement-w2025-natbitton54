@@ -13,6 +13,7 @@ public class RedTrap : MonoBehaviour
 
         if(hp!=null){
             hp.TakeDamage(damageAmount);
+            
         }
       }  
     }
