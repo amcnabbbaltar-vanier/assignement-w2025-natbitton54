@@ -67,7 +67,6 @@ public class HealthSystem : MonoBehaviour
         {
             // If not in level 1, just reset lives and score but do not reset the timer
             GameManager.Instance.currentLives = 3; // Reset lives to 3
-            GameManager.Instance.currentScore = 0; // Reset score
             GameManager.Instance.SaveGame(); // Save reset data
         }
 
