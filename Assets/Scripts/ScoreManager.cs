@@ -13,18 +13,28 @@ public class ScoreManager : MonoBehaviour
             return;
         }
 
-        // Just update the UI with the current score (no resetting)
         UpdateScoreUI();
     }
 
     void Update()
     {
-        // Keep UI updated
         UpdateScoreUI();
     }
 
     void UpdateScoreUI()
     {
-        score.text = "Score: " + GameManager.Instance.currentScore;
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("GameManager.Instance is null!");
+            return;
+        }
+
+        if (score == null)
+        {
+            Debug.LogError("Score TextMeshProUGUI is not assigned!");
+            return;
+        }
+
+        score.text = "Score: " + GameManager.Instance.currentScore.ToString();
     }
 }
