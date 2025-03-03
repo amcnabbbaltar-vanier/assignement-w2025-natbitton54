@@ -1,9 +1,9 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthUIManager : MonoBehaviour
 {
-    public TextMeshProUGUI healthText;  // Reference to the TextMeshPro health text UI
+    public  Slider healthBar;  // Reference to the TextMeshPro health text UI
     private HealthSystem healthSystem;  // Reference to the HealthSystem script
 
     void Start()
@@ -11,10 +11,9 @@ public class HealthUIManager : MonoBehaviour
         // Find the HealthSystem component in the scene
         healthSystem = FindObjectOfType<HealthSystem>();
 
-        // Check if healthText is assigned
-        if (healthText == null)
+        if (healthBar == null)
         {
-            Debug.LogError("HealthText UI not assigned!");
+            Debug.LogError("HealthBar UI not assigned!");
         }
 
         if (healthSystem == null)
@@ -30,10 +29,10 @@ public class HealthUIManager : MonoBehaviour
     public void UpdateHealthUI()
     {
         // Only update UI if healthSystem and healthText are assigned
-        if (healthSystem != null && healthText != null)
+        if (healthSystem != null && healthBar != null)
         {
-            // Display current health out of 3 (e.g., "Health: 3/3")
-            healthText.text = "Lives: " + healthSystem.GetCurrentHP() + "/" + healthSystem.maxHealth;
+            // Display current health 
+            healthBar.value = (float) healthSystem.GetCurrentHP() / healthSystem.maxHealth;
         }
     }
 }
